@@ -248,6 +248,22 @@ function newTable() {
     document.getElementById("arrow").style.display = "block";
 }
 
+function updateImage(){
+    if (move === false) {
+        document.getElementById("arrow").src = "icon/left-arrow.png";
+    } else {
+        document.getElementById("arrow").src = "icon/right-arrow.png"
+    }
+}
+
+function shoot(event) {
+    document.getElementById(event.target.id).style.background = 'black';
+    move = false;
+    start();
+}
+
+
+
 function start() {
     document.getElementById("ButtonStartGame").style.display = "none";
     switch (ships) {
@@ -283,7 +299,9 @@ function start() {
     if (ships === 0) {
         if (enemyShip > 0) {
             if (move === true) {
-
+                document.getElementById("enbattlefield").addEventListener("click", shoot);
+            } else {
+                document.getElementById("arrow").src = "icon/left-arrow.png";
             }
         }
     }
