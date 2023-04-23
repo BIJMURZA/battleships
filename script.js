@@ -1,7 +1,9 @@
-let ships = 4; // общее количество кораблей
+let enemyShip = 4; // общее количество вражеских кораблей
+let ships = 4; // общее количество кораблей союзника
 let fships = 4; // количество клеток для Линкора (4-х палубный корабль)
 let thships = 6; // количество клеток для Крейсера (3-х палубный корабль)
-let twships = 6; // количетсво клеток для Эсминцев (2-х палубный корабль)
+let twships = 6; // количество клеток для Эсминцев (2-х палубный корабль)
+let shlupki = 4; // количество клеток для Шлюпки (1 палубный корабль)
 let begin = null;
 let left = null;
 let right = null;
@@ -9,6 +11,7 @@ let up = null;
 let down = null;
 let direction = null; // направление клеток
 let array = [];
+let move = true; //true - ваш ход, false - ход противника
 
 
 let allaybattlefield = [
@@ -129,6 +132,7 @@ function craser (event) {
     let y = (parseInt(event.target.id) - 1) % 10;
     if (thships > 0) {
         if (check(x, y) === true){
+            console.log("thsips: " + thships)
             if (begin === null) {
                 begin = parseInt(event.target.id);
                 left = begin;
@@ -147,11 +151,9 @@ function craser (event) {
             array.push(x, y)
             thships --;
         } else { return; }
-
         if (thships === 3) {
             console.log("thships = 3: " + array);
             fill(array);
-            ships --;
             begin = null;
             left = null;
             right = null;
@@ -160,8 +162,8 @@ function craser (event) {
             direction = null;
         } else if (thships === 0) {
             console.log("thships = 0: " + array)
-            fill(array);
             ships--;
+            fill(array);
             begin = null;
             left = null;
             right = null;
@@ -198,7 +200,6 @@ function esminec (event) {
 
         if (twships === 4) {
             fill(array);
-            ships --;
             begin = null;
             left = null;
             right = null;
@@ -207,7 +208,6 @@ function esminec (event) {
             direction = null;
         } else if (twships === 2) {
             fill(array);
-            ships --;
             begin = null;
             left = null;
             right = null;
@@ -229,10 +229,27 @@ function esminec (event) {
 }
 
 function shlupka (event) {
+    let x = Math.floor(( parseInt(event.target.id) - 1) / 10);
+    let y = (parseInt(event.target.id) - 1) % 10;
+    if (shlupki >= 1) {
+        if (check(x,y) === true) {
+            document.getElementById(event.target.id).style.background = 'black';
+            allaybattlefield[x][y] = true;
+            shlupki --;
+            if (shlupki === 1) {
+                ships --;
+            }
+        }
+    }
+}
 
+function newTable() {
+    document.getElementById("enbattlefield").classList.remove("hidden");
+    document.getElementById("arrow").style.display = "block";
 }
 
 function start() {
+    document.getElementById("ButtonStartGame").style.display = "none";
     switch (ships) {
         case 4:
             console.log("BATTLEFIELD4")
@@ -257,5 +274,17 @@ function start() {
             document.getElementById("out").innerText = "Enter Shlupka";
             document.getElementById("albattlefield").addEventListener("click", shlupka);
             break;
+        case 0:
+            console.log("CASE 0 = Start Game");
+            document.getElementById("out").remove();
+            newTable();
+            break;
+    }
+    if (ships === 0) {
+        if (enemyShip > 0) {
+            if (move === true) {
+
+            }
+        }
     }
 }
