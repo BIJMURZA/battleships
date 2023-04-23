@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+table {
+    border-collapse: collapse;
+    margin: 0 20px;
+    font-size: 30px;
+}
+
+td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+.battlefield {
+    display: flex;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+
+.button {
+    display: flex;
+}
