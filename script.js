@@ -27,6 +27,21 @@ let allaybattlefield = [
     [false, false, false, false, false, false, false, false, false, false]
 ]; // поле союзника
 
+let enemybattlefield = [
+    [true, false, false, false, true, false, true, false, false, false],
+    [true, false, false, false, true, false, true, false, false, false],
+    [true, false, false, false, false, false, false, false, false, false],
+    [true, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [true, true, true, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [true, true, true, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [true, false, true, false, true, false, true, false, false, false]
+] // поле врага
+
+
+
 function fill (array) {
     for (let i = 0; i < array.length - 1; i += 2) {
         let x = array[i];
@@ -248,18 +263,26 @@ function newTable() {
     document.getElementById("arrow").style.display = "block";
 }
 
-function updateImage(){
-    if (move === false) {
-        document.getElementById("arrow").src = "icon/left-arrow.png";
-    } else {
-        document.getElementById("arrow").src = "icon/right-arrow.png"
-    }
+function checkEnemybattlefield(id) {
+    if (enemybattlefield[toString(id)] !== true) {
+        console.log("enemybattlefield[id]" + enemybattlefield[id])
+        return true;
+    } else {return false}
 }
 
 function shoot(event) {
+    let id = parseInt(event.target.id);
+    let value = id % 100;
+    let x = Math.floor((value - 1) / 10);
+    let y = ( value - 1) % 10;
+    console.log("x: " + x + " " + "y: " + y);
     document.getElementById(event.target.id).style.background = 'black';
+    console.log(checkEnemybattlefield((parseInt(event.target.id) % 100)));
     move = false;
-    start();
+    if (move === false) {
+        document.getElementById("arrow").src = "icon/left-arrow.png";
+        return;
+    }
 }
 
 
@@ -298,11 +321,7 @@ function start() {
     }
     if (ships === 0) {
         if (enemyShip > 0) {
-            if (move === true) {
-                document.getElementById("enbattlefield").addEventListener("click", shoot);
-            } else {
-                document.getElementById("arrow").src = "icon/left-arrow.png";
-            }
+            document.getElementById("enbattlefield").addEventListener("click", shoot);
         }
     }
 }
